@@ -12,6 +12,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ code: -1, msg: "URL eksik", data: null });
     }
 
+    // Doğrudan kendi sunucumuz üzerinden Instagram'ı kazıyoruz
     const data = await instagramGetUrl(url);
 
     if (!data || !data.url_list || data.url_list.length === 0) {
