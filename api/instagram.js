@@ -1,7 +1,6 @@
-const instagramDl = require("instagram-url-direct");
+const { instagramGetUrl } = require("instagram-url-direct");
 
 export default async function handler(req, res) {
-  // CORS ayarları (Uygulamanın erişebilmesi için)
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   if (req.method === "OPTIONS") return res.status(200).end();
@@ -13,17 +12,15 @@ export default async function handler(req, res) {
       return res.status(400).json({ code: -1, msg: "URL eksik", data: null });
     }
 
-    // Doğrudan kendi sunucumuz üzerinden Instagram'ı kazıyoruz!
-    const data = await instagramDl(url);
+    const data = await instagramGetUrl(url);
 
     if (!data || !data.url_list || data.url_list.length === 0) {
-      throw new Error("Medya bulunamadı veya hesap gizli olabilir.");
+      throw new Error("Medya bulunamadı veya hesap gizli.");
     }
 
-    // Uygulamamızın (TikDown) beklediği formata çeviriyoruz
     const items = data.url_list.map(mediaUrl => ({
       url: mediaUrl,
-      type: "video" // instagram-url-direct çoğunlukla video/imaj direkt linkini verir
+      type: "video" 
     }));
 
     return res.status(200).json({
