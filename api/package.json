@@ -1,0 +1,10 @@
+{
+  "name": "tiktok-instagram-proxy",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node api/instagram.js"
+  },
+  "dependencies": {
+    "instagram-url-direct": "^1.0.13"
+  }
+}
